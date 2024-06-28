@@ -1,0 +1,25 @@
+server:
+  port: 8085
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: account-creation-service
+          uri: lb://account-creation-service
+          predicates:
+            - Path=/api/v1/accounts/**
+        - id: identity-verification-service
+          uri: lb://identity-verification-service
+          predicates:
+            - Path=/api/v1/verify-identity/**
+        - id: authentication-service
+          uri: lb://authentication-service
+          predicates:
+            - Path=/auth/v1/**
